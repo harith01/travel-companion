@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CssBaseline, Grid } from "@mui/material";
 import Header from "./components/Header/Header";
 import List from "./components/List/List";
 import Map from "./components/Map/Map";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { getPlacesData } from "./api";
 
 const theme = createTheme();
 
 function App() {
+
+  const [places, setPlaces] = useState([])
+
+  useEffect(() => {
+    getPlacesData()
+      .then((data) => {
+        console.log(data);
+        setPlaces(data);
+      });
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
