@@ -10,15 +10,17 @@ const theme = createTheme();
 
 function App() {
 
-  const [places, setPlaces] = useState([])
+  const [places, setPlaces] = useState([]);
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0});
+  const [bounds, setBounds] = useState(null);
 
   useEffect(() => {
     getPlacesData()
       .then((data) => {
         console.log(data);
-        setPlaces(data);
+        setPlaces(data); 
       });
-  }, [])
+  }, [coordinates, bounds]);  
 
   return (
     <ThemeProvider theme={theme}>
@@ -29,7 +31,11 @@ function App() {
           <List />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Map />
+          <Map 
+            setCoordinates={setCoordinates}
+            setBounds={setBounds}
+            coordinates={coordinates}
+          />
         </Grid>
       </Grid>
     </ThemeProvider>
